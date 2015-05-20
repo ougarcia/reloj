@@ -5,10 +5,13 @@ require 'active_support/inflector'
 require 'erb'
 require_relative './session'
 require_relative './params'
+require_relative './flash'
+require_relative './route_helper'
 
 
 module Phase7
   class ControllerBase
+    extend RouteHelper
     attr_reader :params, :req, :res
 
     def initialize(req, res, route_params = {})
@@ -27,6 +30,7 @@ module Phase7
       @res.status = 302
       @res["Location"] = url
       @already_built_response = true
+      flash.store_flash(@res)
       session.store_session(@res)
     end
 
@@ -35,6 +39,7 @@ module Phase7
       @already_built_response = true
       @res.content_type = content_type
       @res.body = content
+      flash.store_flash(@res)
       session.store_session(@res)
     end
 
@@ -47,6 +52,10 @@ module Phase7
 
     def session
       @session ||= Session.new(@req)
+    end
+
+    def flash
+      @flash ||= Flash.new(@req)
     end
 
     def invoke_action(name)

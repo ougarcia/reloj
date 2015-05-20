@@ -37,7 +37,7 @@ end
 
 router = Phase7::Router.new
 router.draw do
-  get Regexp.new("^/cats$"), Cats2Controller, :index
+  get Regexp.new("^/cats$"), Cats2Controller, :index # fix the problem where it doesn't work with a trailing slash
   get Regexp.new("^/cats/(?<cat_id>\\d+)/statuses$"), StatusesController, :index
 end
 
