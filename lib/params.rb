@@ -3,16 +3,11 @@ require 'byebug'
 
 module Phase7
   class Params
-    # use your initialize to merge params from
-    # 1. query string
-    # 2. post body
-    # 3. route params
-    #
-    # You haven't done routing yet; but assume route params will be
-    # passed in as a hash to `Params.new` as below:
     def initialize(req, route_params = {})
       @params = route_params
-      @params.merge!(parse_www_encoded_form(req.query_string)) if req.query_string
+      if req.query_string
+        @params.merge!(parse_www_encoded_form(req.query_string))
+      end
       @params.merge!(parse_www_encoded_form(req.body)) if req.body
     end
 
@@ -41,12 +36,9 @@ module Phase7
         value = arr.last
         location_in_result = result
         parsed_keys.each_with_index do |parsed_key, i|
-          if location_in_result.keys.include?(parsed_key)
-            location_in_result = location_in_result[parsed_key]
-          else
-            location_in_result[parsed_key] = (i == parsed_keys.length - 1 ? value : {} )
-            location_in_result = location_in_result[parsed_key]
-          end
+          location_in_result[parsed_key] = value if i == parsed_keys.length - 1
+          location_in_result[parsed_key] ||= {}
+          location_in_result = location_in_result[parsed_key]
         end
       end
 

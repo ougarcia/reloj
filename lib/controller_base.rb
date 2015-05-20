@@ -23,7 +23,7 @@ module Phase7
     end
 
     def redirect_to(url)
-      rails if already_built_response?
+      raise if already_built_response?
       @res.status = 302
       @res["Location"] = url
       @already_built_response = true
