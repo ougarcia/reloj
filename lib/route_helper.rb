@@ -1,17 +1,18 @@
 module RouteHelper
-  # will be extended at the class level
 
-  # look at included
-
-  
-
-
-
-  def build_attributes_from_route(route)
+  def RouteHelper.included(klass)
+    klass.extend ClassMethods
   end
 
+  #maybe add link_to and button_to here
 
-  def build_attributes_from_parameters(parameters)
+  module ClassMethods
+    def build_attributes_from_route(route)
+    end
+
+
+    def build_attributes_from_parameters(parameters)
+    end
   end
 
 end
