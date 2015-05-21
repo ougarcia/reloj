@@ -20,14 +20,14 @@ module Phase7
     end
 
 
-    def run(req, res, helper_attrs = [])
+    def run(req, res, paths = [])
       route_params = {}
       matches = @pattern.match(req.path)
       matches.names.each do |key|
         route_params[key] = matches[key]
       end
       #pass the methods to the controller class here
-      @controller_class.new(req, res, route_params, helper_attrs).invoke_action(@action_name)
+      @controller_class.new(req, res, route_params, paths).invoke_action(@action_name)
     end
   end
 
@@ -44,14 +44,14 @@ module Phase7
 
     def initialize
       @routes = []
-      @helper_attrs = []
+      @paths = []
     end
 
     def add_helper_attributes(pattern, action_name)
       #need controller name
       # will get that when passed to controller
       #need action
-      @helper_attrs << { pattern: pattern, action_name: action_name }
+      @paths <<  pattern
     end
 
     # simply adds a new route to the list of routes
@@ -80,7 +80,7 @@ module Phase7
     def run(req, res)
       if match(req)
         #pass in the helper_attributes here
-        match(req).run(req, res, @helper_attrs)
+        match(req).run(req, res, @paths)
       else
         res.status = 404
       end
