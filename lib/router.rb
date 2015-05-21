@@ -19,45 +19,47 @@ module Phase7
       @pattern.match(req.path)
     end
 
-    def add_helper_values(known_unknown)
-      #used to store values as ivars
-      # storing the values need to create a new route_helper
-      # route_helpers aren't created untiil we get to the controller_class
-    end
 
-
-    def run(req, res)
+    def run(req, res, helper_attrs = [])
       route_params = {}
       matches = @pattern.match(req.path)
       matches.names.each do |key|
         route_params[key] = matches[key]
       end
       #pass the methods to the controller class here
-      @controller_class.new(req, res, route_params).invoke_action(@action_name)
+      @controller_class.new(req, res, route_params, helper_attrs).invoke_action(@action_name)
     end
   end
 
   class Router
     attr_reader :routes, :helpers
 
-    def initialize
-      @routes = []
-      @helpers = []
+    def self.regex_from_pattern_string(pattern_string)
+      x = pattern_string.split('/').map do |part|
+        part.gsub(/:(.+)[\/]{,1}/, '(?<\1>\d+)')
+      end.join('/')
+
+      Regexp.new("^#{x}\/?$")
     end
 
-    def add_helper(route)
-      # add helper to route being created
-      @helpers << route
-      #also add helper to all previously created routes
+    def initialize
+      @routes = []
+      @helper_attrs = []
+    end
+
+    def add_helper_attributes(pattern, action_name)
+      #need controller name
+      # will get that when passed to controller
+      #need action
+      @helper_attrs << { pattern: pattern, action_name: action_name }
     end
 
     # simply adds a new route to the list of routes
     def add_route(pattern, method, controller_class, action_name)
-      route = Route.new(pattern, method, controller_class, action_name)
+      parsed_pattern = Router.regex_from_pattern_string(pattern)
+      route = Route.new(parsed_pattern, method, controller_class, action_name)
       @routes << route
-      # make helper
-      # add helper to all previously created routes
-      #   including the one just created
+      add_helper_attributes(pattern, action_name)
     end
 
     def draw(&proc)
@@ -77,7 +79,8 @@ module Phase7
 
     def run(req, res)
       if match(req)
-        match(req).run(req, res)
+        #pass in the helper_attributes here
+        match(req).run(req, res, @helper_attrs)
       else
         res.status = 404
       end
