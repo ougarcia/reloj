@@ -56,7 +56,7 @@ module Phase7
 
     # simply adds a new route to the list of routes
     def add_route(pattern, method, controller_class, action_name)
-      parsed_pattern = Router.regex_from_pattern_string(pattern)
+      parsed_pattern = Router.regex_from_pattern_string(pattern.to_s)
       route = Route.new(parsed_pattern, method, controller_class, action_name)
       @routes << route
       add_helper_attributes(pattern, action_name)

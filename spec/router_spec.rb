@@ -72,7 +72,7 @@ describe Phase7::Router do
 
   describe "#match" do
     it "matches a correct route" do
-      subject.add_route(Regexp.new("^/users$"), :get, :x, :x)
+      subject.add_route("/users", :get, :x, :x)
       allow(req).to receive(:path) { "/users" }
       allow(req).to receive(:request_method) { :get }
       matched = subject.match(req)
@@ -80,7 +80,7 @@ describe Phase7::Router do
     end
 
     it "doesn't match an incorrect route" do
-      subject.add_route(Regexp.new("^/users$"), :get, :x, :x)
+      subject.add_route("/users", :get, :x, :x)
       allow(req).to receive(:path) { "/incorrect_path" }
       allow(req).to receive(:request_method) { :get }
       matched = subject.match(req)
@@ -90,7 +90,7 @@ describe Phase7::Router do
 
   describe "#run" do
     it "sets status to 404 if no route is found" do
-      subject.add_route(Regexp.new("^/users$"), :get, :x, :x)
+      subject.add_route("/users", :get, :x, :x)
       allow(req).to receive(:path).and_return("/incorrect_path")
       allow(req).to receive(:request_method).and_return("GET")
       subject.run(req, res)
@@ -109,7 +109,7 @@ describe Phase7::Router do
 
     it "adds a route when an http method method is called" do
       router = Phase7::Router.new
-      router.get Regexp.new("^/users$"), Phase7::ControllerBase, :index
+      router.get "/users", Phase7::ControllerBase, :index
       expect(router.routes.count).to eq(1)
     end
   end
