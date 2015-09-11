@@ -1,4 +1,3 @@
-p 'loading cats class!'
 class Cat
   attr_reader :name, :owner
   @@cats = [

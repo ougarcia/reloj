@@ -1,4 +1,3 @@
-p 'loading cats controller!'
 class CatsController < Phase7::ControllerBase
 
   def create

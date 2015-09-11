@@ -47,7 +47,6 @@ module Phase7
 
     def render(template_name)
       controller_name = self.class.to_s.underscore
-      p Dir.pwd
       f = File.read("app/views/#{controller_name}/#{template_name}.html.erb")
       f = ERB.new(f)
       render_content(f.result(binding), "text/html")
