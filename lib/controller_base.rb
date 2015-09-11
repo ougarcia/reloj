@@ -1,4 +1,3 @@
-
 require 'active_support'
 require 'active_support/core_ext'
 require 'active_support/inflector'
@@ -22,7 +21,6 @@ module Phase7
       @params = Params.new(req, route_params)
       @paths = paths
       self.class.create_helper_methods(paths)
-      debugger
     end
 
     def already_built_response?
@@ -49,7 +47,8 @@ module Phase7
 
     def render(template_name)
       controller_name = self.class.to_s.underscore
-      f = File.read("views/#{controller_name}/#{template_name}.html.erb")
+      p Dir.pwd
+      f = File.read("app/views/#{controller_name}/#{template_name}.html.erb")
       f = ERB.new(f)
       render_content(f.result(binding), "text/html")
     end
