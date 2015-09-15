@@ -6,9 +6,12 @@ require_relative '../app/models/cat'
 require_relative '../app/controllers/cats_controller'
 require_relative '../config/routes.rb'
 
+router = Phase7::Router.new
+router.draw(&App::ROUTES)
+
 server = WEBrick::HTTPServer.new(Port: 3000)
 server.mount_proc('/') do |req, res|
-  route = Phase7.router.run(req, res)
+  router.run(req, res)
 end
 
 trap('INT') { server.shutdown }

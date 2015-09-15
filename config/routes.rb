@@ -1,12 +1,7 @@
-module Phase7
-  @router = Phase7::Router.new
-
-  def self.router
-    return @router
-  end
-
-  @router.draw do
+module App
+  ROUTES = Proc.new do
+#   put the routes for your app here, e.g.
+#   get '/cats/:cat_id/statuses', StatusesController, :index
     get '/cats', CatsController, :index
-    #get '/cats/:cat_id/statuses', StatusesController, :index
   end
 end
