@@ -1,9 +1,9 @@
 require 'webrick'
 require_relative '../lib/controller_base'
 require_relative '../lib/router'
-# gotta require models, then views, then controllers, then routes
-require_relative '../app/models/cat'
-require_relative '../app/controllers/cats_controller'
+
+require 'require_all'
+require_rel '../app/**/*.rb'
 require_relative '../config/routes.rb'
 
 router = Phase7::Router.new

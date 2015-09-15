@@ -10,6 +10,8 @@ class CatsController < Phase7::ControllerBase
   end
 
   def index
+    session['count'] ||= 0
+    session['count'] += 1
     @cats = Cat.all
     render :index
   end

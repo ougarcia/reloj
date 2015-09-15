@@ -3,8 +3,7 @@ require 'webrick'
 
 module Phase7
   class Session
-    # find the cookie for this app
-    # deserialize the cookie into a hash
+    # find the cookie for this app, deserialize into hash
     def initialize(req)
       req.cookies.each do |cookie|
         if cookie.name == '_rails_lite_app'
@@ -12,8 +11,9 @@ module Phase7
         end
       end
       @_rails_lite_app ||= {}
-  end
+    end
 
+    # convenience methods
     def [](key)
       @_rails_lite_app[key]
     end
@@ -22,8 +22,7 @@ module Phase7
       @_rails_lite_app[key] = val
     end
 
-    # serialize the hash into json and save in a cookie
-    # add to the responses cookies
+    # serialize the hash into json and save in a cookie, add to responses
     def store_session(res)
       cookie = WEBrick::Cookie.new('_rails_lite_app', @_rails_lite_app.to_json)
       cookie.path = '/'

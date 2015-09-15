@@ -1,8 +1,8 @@
 class Cat
   attr_reader :name, :owner
   @@cats = [
-    { id: 1, name: "Curie" },
-    { id: 2, name: "Markov" }
+    { id: 1, name: "Curie", owner: "Bill" },
+    { id: 2, name: "Markov", owner: "John" }
   ]
 
   def self.all
