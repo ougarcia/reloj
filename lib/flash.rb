@@ -13,7 +13,7 @@ module Phase7
       end
       @_old_flash ||= {}
       @_new_flash ||= {}
-  end
+    end
 
     def [](key)
       @_old_flash[key] || @_new_flash[key]
