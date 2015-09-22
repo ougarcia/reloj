@@ -40,10 +40,6 @@ module RouteHelper
         result.join('/')
       end
     end
-
-
   end
-
-
 
 end

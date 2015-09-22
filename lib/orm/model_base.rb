@@ -5,6 +5,10 @@ require 'active_support/inflector'
 
 class ModelBase
 
+  def self.inherited(subclass)
+    attr_writer(*subclass.columns)
+  end
+
   def self.columns
     result = DBConnection.execute2(<<-SQL)
       SELECT
