@@ -23,8 +23,7 @@ module Phase7
     class AttributeNotFoundError < ArgumentError; end;
 
     private
-    # this should return deeply nested hash
-    # argument format
+    # this should return deeply nested hash, ex:
     # user[address][street]=main&user[address][zip]=89436
     # should return
     # { "user" => { "address" => { "street" => "main", "zip" => "89436" } } }

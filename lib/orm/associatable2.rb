@@ -1,6 +1,5 @@
 require_relative 'associatable'
 
-# Phase IV
 module Associatable
   # Remember to go back to 04_associatable to write ::assoc_options
 
