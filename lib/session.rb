@@ -1,7 +1,7 @@
 require 'json'
 require 'webrick'
 
-module Phase7
+module Reloj
   class Session
     # find the cookie for this app, deserialize into hash
     def initialize(req)

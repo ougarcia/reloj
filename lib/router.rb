@@ -1,7 +1,7 @@
 require_relative './route_helper'
 
 
-module Phase7
+module Reloj
   class Route
     attr_reader :pattern, :http_method, :controller_class, :action_name
 

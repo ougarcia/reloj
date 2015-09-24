@@ -6,7 +6,7 @@ require 'require_all'
 require_rel '../app/**/*.rb'
 require_relative '../config/routes.rb'
 
-router = Phase7::Router.new
+router = Reloj::Router.new
 router.draw(&App::ROUTES)
 
 server = WEBrick::HTTPServer.new(Port: 3000)

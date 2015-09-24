@@ -1,4 +1,4 @@
-class CatsController < Phase7::ControllerBase
+class CatsController < Reloj::ControllerBase
 
   def create
     @cat = Cat.new(params["cat"])

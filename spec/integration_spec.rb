@@ -7,7 +7,7 @@ describe "the symphony of things" do
   let(:res) { WEBrick::HTTPResponse.new(HTTPVersion: '1.0') }
 
   before(:all) do
-    class Ctrlr < Phase7::ControllerBase
+    class Ctrlr < Reloj::ControllerBase
       def route_render
         render_content("testing", "text/html")
       end
@@ -26,7 +26,7 @@ describe "the symphony of things" do
 
   describe "routes and params" do
     it "route instantiates controller and calls invoke action" do
-      route = Phase7::Route.new(Regexp.new("^/statuses/(?<id>\\d+)$"), :get, Ctrlr, :route_render)
+      route = Reloj::Route.new(Regexp.new("^/statuses/(?<id>\\d+)$"), :get, Ctrlr, :route_render)
       allow(req).to receive(:path) { "/statuses/1" }
       allow(req).to receive(:request_method) { :get }
       route.run(req, res)
@@ -34,7 +34,7 @@ describe "the symphony of things" do
     end
 
     it "route adds to params" do
-      route = Phase7::Route.new(Regexp.new("^/statuses/(?<id>\\d+)$"), :get, Ctrlr, :route_does_params)
+      route = Reloj::Route.new(Regexp.new("^/statuses/(?<id>\\d+)$"), :get, Ctrlr, :route_does_params)
       allow(req).to receive(:path) { "/statuses/1" }
       allow(req).to receive(:request_method) { :get }
       route.run(req, res)
@@ -46,7 +46,7 @@ describe "the symphony of things" do
     let(:ctrlr) { Ctrlr.new(req, res) }
 
     it "exposes a session via the session method" do
-      expect(ctrlr.session).to be_instance_of(Phase7::Session)
+      expect(ctrlr.session).to be_instance_of(Reloj::Session)
     end
 
     it "saves the session after rendering content" do

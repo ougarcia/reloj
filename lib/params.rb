@@ -1,7 +1,7 @@
 require 'uri'
 require 'byebug'
 
-module Phase7
+module Reloj
   class Params
     def initialize(req, route_params = {})
       @params = route_params

@@ -1,7 +1,7 @@
 require 'json'
 require 'webrick'
 
-module Phase7
+module Reloj
   class Flash
     # find the cookie for this app
     # deserialize the cookie into a hash

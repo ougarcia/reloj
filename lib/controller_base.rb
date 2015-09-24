@@ -9,7 +9,7 @@ require_relative './route_helper'
 require 'byebug'
 
 
-module Phase7
+module Reloj
   class ControllerBase
     include RouteHelper
     attr_reader :params, :req, :res

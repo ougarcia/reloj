@@ -1,9 +1,9 @@
 require 'webrick'
 require_relative '../lib/controller_base'
 
-describe Phase7::ControllerBase do
+describe Reloj::ControllerBase do
   before(:all) do
-    class UsersController < Phase7::ControllerBase
+    class UsersController < Reloj::ControllerBase
       def index
       end
     end
