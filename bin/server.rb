@@ -1,6 +1,7 @@
 require 'webrick'
-require_relative '../lib/controller_base'
-require_relative '../lib/router'
+require 'reloj'
+#require_relative '../lib/controller_base'
+#require_relative '../lib/router'
 
 require 'require_all'
 require_rel '../app/**/*.rb'
