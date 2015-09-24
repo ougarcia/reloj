@@ -3,9 +3,11 @@ require 'active_support/inflector'
 
 class ModelBase
 
-  def self.inherited(subclass)
-    attr_writer(*subclass.columns)
-  end
+#  rough idea on how to replace self.finalize!
+#  need to run at end of class definiton, not beginning
+#  def self.inherited(subclass)
+#    attr_writer(*subclass.columns)
+#  end
 
   def self.columns
     result = DBConnection.execute2(<<-SQL)
