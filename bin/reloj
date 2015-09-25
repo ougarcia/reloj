@@ -1,14 +1,11 @@
 #!/usr/bin/env ruby
 
-#require 'webrick'
 require 'reloj'
-#require_relative '../lib/controller_base'
-#require_relative '../lib/router'
-
 require 'require_all'
 require_rel '../app/**/*.rb'
 require_relative '../config/routes.rb'
 
+# can check the first argument variable using ARGV[0]
 router = Reloj::Router.new
 router.draw(&App::ROUTES)
 

@@ -23,10 +23,9 @@ Gem::Specification.new do |spec|
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features|app|reloj-0.1.0.gem)/})
+    f.match(%r{^(test|spec|features|app)/})
   end
-  spec.executables   = ["console", "server", "setup"]
-  p spec.executables
+  spec.executables   = ["reloj"]
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.10"

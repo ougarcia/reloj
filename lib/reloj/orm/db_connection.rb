@@ -1,6 +1,5 @@
 require 'sqlite3'
 
-# TODO change to root directory of project!!!!
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
 #ROOT_FOLDER = File.join(File.dirname(__FILE__), '../..')
 ROOT_FOLDER = Dir.pwd
