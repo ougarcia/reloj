@@ -23,9 +23,9 @@ Gem::Specification.new do |spec|
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features|app)/})
+    f.match(%r{^(test|spec|features|app|reloj-0.1.0.gem)/})
   end
-  spec.executables   = ["console, server, setup"]
+  spec.executables   = ["console", "server", "setup"]
   p spec.executables
   spec.require_paths = ["lib"]
 
