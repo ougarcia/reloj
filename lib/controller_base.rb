@@ -6,7 +6,6 @@ require_relative './session'
 require_relative './params'
 require_relative './flash'
 require_relative './route_helper'
-require 'byebug'
 
 
 module Reloj

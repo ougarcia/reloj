@@ -1,4 +1,6 @@
-require 'webrick'
+#!/usr/bin/env ruby
+
+#require 'webrick'
 require 'reloj'
 #require_relative '../lib/controller_base'
 #require_relative '../lib/router'
