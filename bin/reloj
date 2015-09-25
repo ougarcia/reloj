@@ -1,18 +1,27 @@
 #!/usr/bin/env ruby
 
 require 'reloj'
-require 'require_all'
-require_rel '../app/**/*.rb'
-require_relative '../config/routes.rb'
 
-# can check the first argument variable using ARGV[0]
-router = Reloj::Router.new
-router.draw(&App::ROUTES)
+case ARGV[0]
+when "server"
+  require 'require_all'
+  require_all "#{Dir.pwd}/app/**/*.rb"
+  require_relative "#{Dir.pwd}/config/routes.rb"
+  router = Reloj::Router.new
+  router.draw(&App::ROUTES)
 
-server = WEBrick::HTTPServer.new(Port: 3000)
-server.mount_proc('/') do |req, res|
-  router.run(req, res)
+  server = WEBrick::HTTPServer.new(Port: 3000)
+  server.mount_proc('/') do |req, res|
+    router.run(req, res)
+  end
+
+  trap('INT') { server.shutdown }
+  server.start
+when "new"
+  puts ARGV[1]
+  name = ARGV[1] || "reloj_app"
+  project_folder = File.join(Dir.pwd, name)
+  Dir.mkdir(project_folder)
+else
+  puts "Invalid reloj command"
 end
-
-trap('INT') { server.shutdown }
-server.start
