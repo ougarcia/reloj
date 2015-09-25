@@ -20,8 +20,27 @@ when "server"
 when "new"
   puts ARGV[1]
   name = ARGV[1] || "reloj_app"
+
   project_folder = File.join(Dir.pwd, name)
   Dir.mkdir(project_folder)
+
+  ["app", "config", "db"].each do |f|
+    new_dir = File.join(project_folder, f)
+    Dir.mkdir(new_dir)
+  end
+
+  app_dir = File.join(project_folder, "app")
+  ["models", "controllers", "views"].each do |f|
+    new_dir = File.join(app_dir, f)
+    Dir.mkdir(new_dir)
+  end
+when "generate:sample"
+  lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+  sample_dir = File.join(lib, 'reloj/sample_app')
+  FileUtils.cp(sample_dir, './')
+when "debug"
+  lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+  p lib
 else
   puts "Invalid reloj command"
 end
