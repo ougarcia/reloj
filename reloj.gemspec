@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["oz.ulysses@gmail.com"]
 
   spec.summary       = %q{A lightewieght mvc framework inspired by Ruby on Rails}
-  spec.description   = %q{A lightewieght mvc framework inspired by Ruby on Rails}
+  spec.description   = %q{A lightewieght mvc framework inspired by Ruby on Rails. Try it out!}
   spec.homepage      = "https://github.com/ougarcia/reloj"
   spec.license       = "MIT"
 

@@ -2,45 +2,34 @@
 
 require 'reloj'
 
-case ARGV[0]
-when "server"
+def run_server
   require 'require_all'
   require_all "#{Dir.pwd}/app/**/*.rb"
   require_relative "#{Dir.pwd}/config/routes.rb"
+
   router = Reloj::Router.new
   router.draw(&App::ROUTES)
 
   server = WEBrick::HTTPServer.new(Port: 3000)
-  server.mount_proc('/') do |req, res|
-    router.run(req, res)
-  end
-
+  server.mount_proc('/') { |req, res| router.run(req, res) }
   trap('INT') { server.shutdown }
   server.start
+end
+
+def generate_project(src, name)
+  lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+  src_dir = File.join(lib, "reloj/skeletons/#{src}")
+  FileUtils.cp_r(src_dir, "./#{name}")
+end
+
+case ARGV[0]
+when "server"
+  run_server
 when "new"
-  puts ARGV[1]
-  name = ARGV[1] || "reloj_app"
-
-  project_folder = File.join(Dir.pwd, name)
-  Dir.mkdir(project_folder)
-
-  ["app", "config", "db"].each do |f|
-    new_dir = File.join(project_folder, f)
-    Dir.mkdir(new_dir)
-  end
-
-  app_dir = File.join(project_folder, "app")
-  ["models", "controllers", "views"].each do |f|
-    new_dir = File.join(app_dir, f)
-    Dir.mkdir(new_dir)
-  end
+  name = ARGV[1].nil? ? "reloj_app" : ARGV[1]
+  generate_project('new_app', name)
 when "generate:sample"
-  lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
-  sample_dir = File.join(lib, 'reloj/sample_app')
-  FileUtils.cp(sample_dir, './')
-when "debug"
-  lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
-  p lib
+  generate_project('sample_app', 'reloj_sample')
 else
   puts "Invalid reloj command"
 end
