@@ -1,5 +1,5 @@
 # Reloj
-A lightweight web frameowrk for Ruby for creating database-backed web applications with the Model-View-Controller pattern.
+A lightweight web framework for Ruby for creating database-backed web applications with the Model-View-Controller pattern.
 
 ## Getting Started
 
