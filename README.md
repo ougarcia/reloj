@@ -1,5 +1,5 @@
 # Reloj
-A lightweight web frameowrk for Ruby for creating database-backed web applications according to the Model-View-Controller pattern.
+A lightweight web frameowrk for Ruby for creating database-backed web applications with the Model-View-Controller pattern.
 
 ## Getting Started
 
@@ -32,18 +32,30 @@ class Cat < ModelBase
 	finalize!
 end
 ```
-Some commands:
+###Some commands:
 
 ```ruby
-Cat.all # returns an array with instances of class Cat, one instance for each row in table cats
+Cat.all
 ```
+* Returns an array with instances of class Cat, one instance for each row in table cats
+
 ```ruby
-Cat.find(2) # finds the record in table cats with id 2, returns instance of Cat corresponding to that record
+Cat.find(2)
 ```
+* Finds the record in table cats with id 2, returns instance of Cat corresponding to that record
 
 ## Controllers
+Create controllers in `app/controllers`. Controllers should inherit from `ControllerBase`.
+
 ```ruby
-class MyController < ControllerBase
+class CatsController < ControllerBase
+
+	def index
+		@cats = Cat.all
+		render :index
+	end
+	
+end
 ```
 
 ## Routes
@@ -60,17 +72,18 @@ end
 ```
 
 ## Running the sample app
-Reloj includes a generator for a sample app. To check it out:
+Reloj includes a generator for a sample app. To check it out:  
+
 1. Generate the sample app
-	
-	reloj generate:sample
-	
+
+		reloj generate:sample
+
 2. Move into the sample app directory
-	
-	cd reloj_sample
-	
+
+		cd reloj_sample
+
 3. Run the server
 
-	reloj server
-	
+		reloj server
+
 4. Navigate to localhost:3000
