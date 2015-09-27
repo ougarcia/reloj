@@ -23,7 +23,7 @@ A lightweight web framework for Ruby for creating database-backed web applicatio
 "Welcome to Reloj!"
 
 ## Models and ORM
-Reloj the active record pattern for its object-relational mapping.
+Reloj uses the active record pattern for its object-relational mapping.
 To use this functionality in your app, create a class for your model in `app/models` and have the model inherit from ModelBase
 ```ruby
 class Cat < ModelBase
