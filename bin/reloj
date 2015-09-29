@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'reloj'
+require 'reloj/orm/pg_db'
 
 def run_server
   require 'require_all'
@@ -20,6 +21,8 @@ def generate_project(src, name)
   lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
   src_dir = File.join(lib, "reloj/skeletons/#{src}")
   FileUtils.cp_r(src_dir, "./#{name}")
+  config = { dbname: name }
+  File.write(File.join(Dir.pwd, "#{name}/config/db.yml"), YAML.dump(config))
 end
 
 case ARGV[0]
@@ -28,6 +31,11 @@ when "server"
 when "new"
   name = ARGV[1].nil? ? "reloj_app" : ARGV[1]
   generate_project('new_app', name)
+when "db"
+  case ARGV[1]
+  when "create"
+    Database.create
+  end
 when "generate:sample"
   generate_project('sample_app', 'reloj_sample')
 else

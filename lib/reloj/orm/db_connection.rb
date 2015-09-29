@@ -6,6 +6,10 @@ ROOT_FOLDER = Dir.pwd
 CATS_SQL_FILE = File.join(ROOT_FOLDER, 'app/cats.sql')
 CATS_DB_FILE = File.join(ROOT_FOLDER, 'app/cats.db')
 
+# This dbconnection was used for testing and is deprecated
+# I might refactor this in the future, in order to have this orm support
+# both sqlite3 ane psql
+
 class DBConnection
   def self.open(db_file_name)
     @db = SQLite3::Database.new(db_file_name)
@@ -32,6 +36,7 @@ class DBConnection
   end
 
   def self.execute(*args)
+    # make this pretty print
     puts args[0]
 
     instance.execute(*args)

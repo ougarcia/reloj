@@ -1,7 +1,9 @@
 require_relative 'db_connection'
+require_relative 'pg_db'
 require 'active_support/inflector'
 
 class ModelBase
+  @@DB = Database.new
 
 #  rough idea on how to replace self.finalize!
 #  need to run at end of class definiton, not beginning
@@ -10,7 +12,7 @@ class ModelBase
 #  end
 
   def self.columns
-    result = DBConnection.execute2(<<-SQL)
+    result = @@DB.execute(<<-SQL)
       SELECT
         *
       FROM
@@ -19,7 +21,7 @@ class ModelBase
         0;
     SQL
 
-    result.first.map(&:to_sym)
+    result.fields.map(&:to_sym)
   end
 
   def self.finalize!
@@ -42,7 +44,7 @@ class ModelBase
   end
 
   def self.all
-    results_array = DBConnection.execute(<<-SQL)
+    results_array = @@DB.execute(<<-SQL)
     SELECT
       *
     FROM
@@ -53,6 +55,7 @@ class ModelBase
   end
 
   def self.parse_all(results)
+    # TODO: rewrite with map
     answer = []
     results.each do |result|
       answer << self.new(result)
@@ -61,7 +64,7 @@ class ModelBase
   end
 
   def self.find(id)
-    x = DBConnection.execute(<<-SQL, id)
+    x = @@DB.execute(<<-SQL, id)
     SELECT
       *
     FROM
@@ -98,13 +101,15 @@ class ModelBase
     n = my_columns.length
     question_marks = (["?"] * n).join(", ")
 
-    DBConnection.execute(<<-SQL, self.attribute_values)
+    response = @@DB.execute(<<-SQL, self.attribute_values)
       INSERT INTO
         #{self.class.table_name} (#{col_names})
       VALUES
-        (#{question_marks});
+        (#{question_marks})
+      RETURNING
+        id;
     SQL
-    self.id = DBConnection.last_insert_row_id
+    self.id = response[0]['id'].to_i
   end
 
   def update
@@ -112,7 +117,7 @@ class ModelBase
       "#{col_name} = ?"
     end.join(", ")
 
-    DBConnection.execute(<<-SQL, self.attribute_values, self.id)
+    @@DB.execute(<<-SQL, self.attribute_values, self.id)
       UPDATE
         #{self.class.table_name}
       SET
