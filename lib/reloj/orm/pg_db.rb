@@ -6,15 +6,25 @@ class Database
   @@config = YAML.load_file(File.join(Dir.pwd, 'config/db.yml'))
 
   def self.create
-    #write the actual SQL to create a table
+    # TODO: handle this if db already exists
     db = PG::Connection.new(dbname: "postgres")
     db.exec("CREATE DATABASE #{@@config[:dbname]}")
   end
 
-  def self.seed
+  def self.delete
+    db = PG::Connection.new(dbname: "postgres")
+    db.exec("DROP DATABASE IF EXISTS #{@@config[:dbname]}")
+  end
+
+  def self.setup
+    setup_script = File.read(File.join(Dir.pwd, 'db/setup.sql'))
+    db = PG::Connection.new(dbname: @@config[:dbname])
+    db.exec(setup_script)
   end
 
   def self.reset
+    self.delete
+    self.create
   end
 
   def initialize
@@ -33,7 +43,10 @@ class Database
 
     @db = PG::Connection.new(db_options)
 
-    @db
+  end
+
+  def execute(*args)
+    @db.exec(*args)
   end
 
 end
