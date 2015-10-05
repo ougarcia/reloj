@@ -3,7 +3,6 @@ require_relative 'pg_db'
 require 'active_support/inflector'
 
 class ModelBase
-  @@DB = Database.new
 
 #  rough idea on how to replace self.finalize!
 #  need to run at end of class definiton, not beginning
@@ -12,7 +11,7 @@ class ModelBase
 #  end
 
   def self.columns
-    result = @@DB.execute(<<-SQL)
+    result = Database.execute(<<-SQL)
       SELECT
         *
       FROM
@@ -44,7 +43,7 @@ class ModelBase
   end
 
   def self.all
-    results_array = @@DB.execute(<<-SQL)
+    results_array = Database.execute(<<-SQL)
     SELECT
       *
     FROM
@@ -64,7 +63,7 @@ class ModelBase
   end
 
   def self.find(id)
-    x = @@DB.execute(<<-SQL, id)
+    x = Database.execute(<<-SQL, id)
     SELECT
       *
     FROM
@@ -101,7 +100,7 @@ class ModelBase
     n = my_columns.length
     question_marks = (["?"] * n).join(", ")
 
-    response = @@DB.execute(<<-SQL, self.attribute_values)
+    response = Database.execute(<<-SQL, self.attribute_values)
       INSERT INTO
         #{self.class.table_name} (#{col_names})
       VALUES
@@ -117,7 +116,7 @@ class ModelBase
       "#{col_name} = ?"
     end.join(", ")
 
-    @@DB.execute(<<-SQL, self.attribute_values, self.id)
+    Database.execute(<<-SQL, self.attribute_values, self.id)
       UPDATE
         #{self.class.table_name}
       SET
