@@ -1,5 +1,4 @@
 require 'uri'
-require 'byebug'
 
 module Reloj
   class Params
