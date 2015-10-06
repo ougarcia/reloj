@@ -20,6 +20,8 @@ def generate_project(src, name)
   lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
   src_dir = File.join(lib, "reloj/skeletons/#{src}")
   FileUtils.cp_r(src_dir, "./#{name}")
+  common_dir = File.join(lin, "reloj/skeletons/common_files/.")
+  FileUtils.cp_r(common_dir, "./#{name}")
 
   config = { dbname: name }
   File.write(File.join(Dir.pwd, "#{name}/config/db.yml"), YAML.dump(config))
