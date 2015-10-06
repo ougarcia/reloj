@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'reloj'
-#require 'reloj/orm/pg_db'
 
 def run_server
   require 'require_all'
