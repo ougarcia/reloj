@@ -36,7 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "webrick", "~> 1.3"
   spec.add_runtime_dependency "activesupport", "~> 4.2"
   spec.add_runtime_dependency "require_all", "~> 1.3"
-  spec.add_runtime_dependency "sqlite3", "~> 1.3"
   spec.add_runtime_dependency "pg", "~> 0.18"
 
 end
