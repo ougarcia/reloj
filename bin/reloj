@@ -2,37 +2,52 @@
 
 require 'reloj'
 
-def run_server
-  require 'require_all'
-  require_all "#{Dir.pwd}/app/**/*.rb"
-  require_relative "#{Dir.pwd}/config/routes.rb"
+class TaskHandler
 
-  router = Reloj::Router.new
-  router.draw(&App::ROUTES)
+  def self.run_server
+    require 'require_all'
+    require_all "#{Dir.pwd}/app/**/*.rb"
+    require_relative "#{Dir.pwd}/config/routes.rb"
 
-  server = WEBrick::HTTPServer.new(Port: 3000)
-  server.mount_proc('/') { |req, res| router.run(req, res) }
-  trap('INT') { server.shutdown }
-  server.start
-end
+    router = Reloj::Router.new
+    router.draw(&App::ROUTES)
 
-def generate_project(src, name)
-  lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
-  src_dir = File.join(lib, "reloj/skeletons/#{src}")
-  FileUtils.cp_r(src_dir, "./#{name}")
-  common_dir = File.join(lin, "reloj/skeletons/common_files/.")
-  FileUtils.cp_r(common_dir, "./#{name}")
+    server = WEBrick::HTTPServer.new(Port: 3000)
+    server.mount_proc('/') { |req, res| router.run(req, res) }
+    trap('INT') { server.shutdown }
+    server.start
+  end
 
-  config = { dbname: name }
-  File.write(File.join(Dir.pwd, "#{name}/config/db.yml"), YAML.dump(config))
+  def self.generate_project(src, name)
+    # copy skeleton
+    copy_directory(src, name)
+
+    # copy Rakefile and Gemfile
+    copy_directory("common_files/.", name)
+
+    # write db.yml
+    config = { dbname: name }
+    File.write(File.join(Dir.pwd, "#{name}/config/db.yml"), YAML.dump(config))
+  end
+
+  def self.copy_directory(src, dest)
+    FileUtils.cp_r(File.join(skels_dir, src), "./#{dest}")
+  end
+
+  def self.skels_dir
+    @skels_dir ||= File.expand_path(
+      File.dirname(__FILE__) +
+      '/../lib/reloj/skeletons'
+    )
+  end
 end
 
 case ARGV[0]
 when "server"
-  run_server
+  TaskHandler.run_server
 when "new"
   name = ARGV[1].nil? ? "reloj_app" : ARGV[1]
-  generate_project('new_app', name)
+  TaskHandler.generate_project('new_app', name)
 when "db"
   case ARGV[1]
   when "create"
@@ -45,7 +60,7 @@ when "db"
     Database.reset
   end
 when "generate:sample"
-  generate_project('sample_app', 'reloj_sample')
+  TaskHandler.generate_project('sample_app', 'reloj_sample')
 else
   puts "Invalid reloj command"
 end
