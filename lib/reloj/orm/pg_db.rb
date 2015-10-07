@@ -34,7 +34,7 @@ class Database
       dbname: params.path[1..-1],
       port: params.port,
       password: params.password,
-      user: x.user
+      user: params.user
     }
   end
 
