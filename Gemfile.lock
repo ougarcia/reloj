@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    reloj (0.1.0)
+    reloj (0.1.4)
       activesupport (~> 4.2)
       pg (~> 0.18)
       require_all (~> 1.3)
