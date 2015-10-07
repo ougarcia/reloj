@@ -16,8 +16,7 @@ class Database
 
   def self.setup
     setup_script = File.read(File.join(Dir.pwd, 'db/setup.sql'))
-    db = PG::Connection.new(dbname: Database.config[:dbname])
-    db.exec(setup_script)
+    execute(setup_script)
   end
 
   def self.reset

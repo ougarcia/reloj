@@ -12,7 +12,7 @@ class TaskHandler
     router = Reloj::Router.new
     router.draw(&App::ROUTES)
 
-    server = WEBrick::HTTPServer.new(Port: 3000)
+    server = WEBrick::HTTPServer.new(Port: ENV['$PORT'] || 3000)
     server.mount_proc('/') { |req, res| router.run(req, res) }
     trap('INT') { server.shutdown }
     server.start
