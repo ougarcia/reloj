@@ -116,9 +116,10 @@ Reloj includes a generator for a sample app. To check it out:
 ## Deploying
 Reloj is built to make deploying to heroku as easy as possible, here's how:
 
-1. Write a Procfile, automatically generate one using:
+1. Make sure there's a procfile in the project's root directory with the following line:
 
-		reloj generate procfile
+		web: bundle exec reloj server
+
 		
 2. Commit your changes to git
 
