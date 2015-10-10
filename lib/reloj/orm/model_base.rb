@@ -5,12 +5,13 @@ class ModelBase
 
 #  rough idea on how to replace self.finalize!
 #  need to run at end of class definiton, not beginning
+  #  could work if isntead of calling tablename i call self.to_s.tableize
 #  def self.inherited(subclass)
 #    attr_writer(*subclass.columns)
 #  end
 
   def self.columns
-    result = Database.execute(<<-SQL)
+    @columns ||= Database.execute(<<-SQL).fields.map(&:to_sym)
       SELECT
         *
       FROM
@@ -18,8 +19,6 @@ class ModelBase
       LIMIT
         0;
     SQL
-
-    result.fields.map(&:to_sym)
   end
 
   def self.finalize!
@@ -93,17 +92,21 @@ class ModelBase
     end
   end
 
+  def not_id_attribute_values
+    self.class.columns.drop(1).map { |column| self.send(column) }
+  end
+
   def insert
-    my_columns = self.class.columns
+    my_columns = self.class.columns.drop(1)
     col_names = my_columns.join(", ")
     n = my_columns.length
-    question_marks = (["?"] * n).join(", ")
+    placeholders = [*1..n].map { |num| "$" + num.to_s }.join(', ')
 
-    response = Database.execute(<<-SQL, self.attribute_values)
+    response = Database.execute(<<-SQL, self.not_id_attribute_values)
       INSERT INTO
         #{self.class.table_name} (#{col_names})
       VALUES
-        (#{question_marks})
+        (#{placeholders})
       RETURNING
         id;
     SQL

@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS cats;
 CREATE TABLE cats (
-  id INTEGER PRIMARY KEY,
+  id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   owner_id INTEGER
 
@@ -37,10 +37,10 @@ VALUES
   (4, 'Catless', 'Human', NULL);
 
 INSERT INTO
-  cats (id, name, owner_id)
+  cats (name, owner_id)
 VALUES
-  (1, 'Breakfast', 1),
-  (2, 'Earl', 2),
-  (3, 'Haskell', 3),
-  (4, 'Markov', 3),
-  (5, 'Stray Cat', NULL);
+  ('Breakfast', 1),
+  ('Earl', 2),
+  ('Haskell', 3),
+  ('Markov', 3),
+  ('Stray Cat', NULL);

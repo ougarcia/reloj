@@ -52,6 +52,16 @@ class Database
   end
 
   def self.execute(*args)
+    puts
+    args.each do |arg|
+      if arg.is_a? String
+        print arg.split("\n").map(&:strip).join(" ") + "\n"
+      else
+        print arg.join(", ") + "\n"
+      end
+    end
+    puts
+
     instance.exec(*args)
   end
 
