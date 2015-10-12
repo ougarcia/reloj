@@ -1,6 +1,5 @@
 require_relative 'pg_db'
 require 'active_support/inflector'
-require 'byebug'
 
 class ModelBase
 
