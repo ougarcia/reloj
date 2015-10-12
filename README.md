@@ -1,5 +1,5 @@
 # Reloj
-A lightweight web framework for Ruby for creating database-backed web applications with the Model-View-Controller pattern.
+A lightweight web framework for Ruby for creating database-backed web applications with the Model-View-Controller pattern. It features an ActiveRecord pattern ORM, convenient methods for cookie storage for things like session tokens, convenient executables to make development faster (like `reloj new name_of_app`), and is designed to be easy to deply. Check out a [live app built with reloj and deployed on heroku](https://reloj-todo.herokuapp.com/)
 
 ## Getting Started
 
@@ -48,7 +48,8 @@ To learn how to manage the database when deploying, scroll down to the Deploy se
 
 ## Models and ORM
 Reloj uses the active record pattern for its object-relational mapping.
-To use this functionality in your app, create a class for your model in `app/models` and have the model inherit from ModelBase
+To use this functionality in your app, create a class for your model in `app/models` and have the model inherit from ModelBase  
+
 ```ruby
 class Cat < ModelBase
 	# custom code goes here
@@ -144,7 +145,7 @@ Reloj is built to make deploying to heroku as easy as possible, here's how:
 Enjoy your now-deployed app!
 
 ## TODO
-* WEBrick doesn't support PATCH/DELETE (I think). Maybe I can monkey-patch that in using servlets
+* WEBrick doesn't support PATCH/DELETE. Maybe I can monkey-patch that in using servlets
 * Right now it doesn't serve assets. I think I can get it that work using servlets, also.
 * REFERENCE: [http://ruby-doc.org/stdlib-1.9.3/libdoc/webrick/rdoc/WEBrick.html#module-WEBrick-label-Servlets](http://ruby-doc.org/stdlib-1.9.3/libdoc/webrick/rdoc/WEBrick.html#module-WEBrick-label-Servlets)
 
