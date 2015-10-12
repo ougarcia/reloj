@@ -67,7 +67,7 @@ class ModelBase
     FROM
       #{table_name}
     WHERE
-      id = ?;
+      id = $1;
     SQL
 
     x.empty? ? nil : self.new(x.first)
@@ -113,18 +113,27 @@ class ModelBase
     self.id = response[0]['id'].to_i
   end
 
+  def destroy
+    Database.execute(<<-SQL)
+    DELETE FROM
+      #{self.class.table_name}
+    WHERE
+      id = #{self.id};
+    SQL
+  end
+
   def update
-    columns_line = self.class.columns.map do |col_name|
-      "#{col_name} = ?"
+    columns_line = self.class.columns.map.with_index do |col_name, i|
+      "#{col_name} = $#{i + 1}"
     end.join(", ")
 
-    Database.execute(<<-SQL, self.attribute_values, self.id)
+    Database.execute(<<-SQL, self.attribute_values)
       UPDATE
         #{self.class.table_name}
       SET
         #{columns_line}
       WHERE
-        id = ?;
+        id = #{self.id};
     SQL
   end
 

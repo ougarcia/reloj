@@ -13,7 +13,6 @@ class CatsController < Reloj::ControllerBase
     session['count'] ||= 0
     session['count'] += 1
     @cats = Cat.all
-    p @cats
     render :index
   end
 

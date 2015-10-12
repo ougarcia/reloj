@@ -142,3 +142,9 @@ Reloj is built to make deploying to heroku as easy as possible, here's how:
 		heroku open
 		
 Enjoy your now-deployed app!
+
+## TODO
+* WEBrick doesn't support PATCH/DELETE (I think). Maybe I can monkey-patch that in using servlets
+* Right now it doesn't serve assets. I think I can get it that work using servlets, also.
+* REFERENCE: [http://ruby-doc.org/stdlib-1.9.3/libdoc/webrick/rdoc/WEBrick.html#module-WEBrick-label-Servlets](http://ruby-doc.org/stdlib-1.9.3/libdoc/webrick/rdoc/WEBrick.html#module-WEBrick-label-Servlets)
+

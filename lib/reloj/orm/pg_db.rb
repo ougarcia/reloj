@@ -52,17 +52,15 @@ class Database
   end
 
   def self.execute(*args)
-    puts
-    args.each do |arg|
-      if arg.is_a? String
-        print arg.split("\n").map(&:strip).join(" ") + "\n"
-      else
-        print arg.join(", ") + "\n"
-      end
-    end
-    puts
-
+    pretty_print_sql(*args)
     instance.exec(*args)
+  end
+
+  def self.pretty_print_sql(*sql_args)
+    pretty = sql_args.map do |a|
+      a.is_a?(String) ? a.gsub(/\s+/, " ").gsub(/;\s/, ";\n") : a.join(", ")
+    end.join("\n")
+    print "\n#{pretty}\n"
   end
 
 end
