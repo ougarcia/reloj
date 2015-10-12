@@ -12,15 +12,16 @@ A lightweight web framework for Ruby for creating database-backed web applicatio
         reloj new myapp
 
    where "myapp" is the application name.
+   
+3. Create a controller, a route, and a view (see below)
 
-3. Change directory to `myapp` and start the web server:
+4. Change directory to `myapp` and start the web server:
 
         cd myapp
         reloj server
 
 
-4. Using a browser, go to `http://localhost:3000` and you'll see:
-"Welcome to Reloj!"
+5. Using a browser, navigate to `http://localhost:3000` and to see what you created.
 
 ## Setting up the database
 
@@ -106,18 +107,23 @@ Reloj includes a generator for a sample app. To check it out:
 2. Move into the sample app directory
 
 		cd reloj_sample
+3. run `bundle install`
+4. Set up the database
 
-3. Run the server
+		bundle exec rake db:create
+		bundle exec rake db:setup
+
+4. Run the server
 
 		reloj server
 
-4. Navigate to localhost:3000
+5. Navigate to localhost:3000
 
 
 ## Deploying
 Reloj is built to make deploying to heroku as easy as possible, here's how:
 
-1. Make sure there's a procfile in the project's root directory with the following line:
+1. Make sure there's a procfile in the project's root directory. The Procfile should contain the following line:
 
 		web: bundle exec reloj server
 
@@ -145,7 +151,7 @@ Reloj is built to make deploying to heroku as easy as possible, here's how:
 Enjoy your now-deployed app!
 
 ## TODO
-* WEBrick doesn't support PATCH/DELETE. Maybe I can monkey-patch that in using servlets
-* Right now it doesn't serve assets. I think I can get it that work using servlets, also.
+* WEBrick doesn't support PATCH/DELETE. I need to either use a different http server or add that funcitonality to WEBrick.
+* Right now it doesn't serve assets. I think I can get it that work using servlet.
 * REFERENCE: [http://ruby-doc.org/stdlib-1.9.3/libdoc/webrick/rdoc/WEBrick.html#module-WEBrick-label-Servlets](http://ruby-doc.org/stdlib-1.9.3/libdoc/webrick/rdoc/WEBrick.html#module-WEBrick-label-Servlets)
 
