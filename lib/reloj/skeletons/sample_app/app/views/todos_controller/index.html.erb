@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">Todo app Build with Reloj</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="http://github.com/ougarcia/reloj">GitHub</a></li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3">
+        <h1>Todos</h1>
+
+        <div class="panel panel-default">
+          <ul class="list-group">
+            <% @todos.each do |todo| %>
+              <li class="list-group-item">
+                <%= todo.title %>
+                <button data-id="<%= todo.id %>" class="btn btn-danger btn-xs pull-right" type="submit">
+                  Done
+                </button>
+              </li>
+            <% end %>
+          </ul>
+
+          <div class="panel-footer">
+            <a href="/todos/new" class="btn btn-primary btn-lg btn-block">
+              New Todo
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- until I build an asset pipeline, I'll have to make do with CDNs & inline js -->
+  <script>
+    $('button.btn-danger').on('click', function(e) {
+      e.preventDefault();
+      var $currentTarget = $(e.currentTarget);
+      var id = $currentTarget.data('id');
+      $currentTarget.parent().remove();
+      $.ajax({
+        url: "/todos/" + id + '/delete',
+        method: "POST"
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,10 +1,11 @@
 module App
   ROUTES = Proc.new do
-#   put the routes for your app here, e.g.
-#   get '/cats/:cat_id/statuses', StatusesController, :index
 
-    get '/cats', CatsController, :index
-    get '/cats/new', CatsController, :new
-    post '/cats', CatsController, :create
+    get '/', TodosController, :index
+    get '/todos', TodosController, :index
+    get '/todos/new', TodosController, :new
+    post '/todos/:id/delete', TodosController, :destroy
+    post '/todos', TodosController, :create
+
   end
 end

@@ -1,5 +1,6 @@
 require_relative 'pg_db'
 require 'active_support/inflector'
+require 'byebug'
 
 class ModelBase
 
@@ -61,7 +62,7 @@ class ModelBase
   end
 
   def self.find(id)
-    x = Database.execute(<<-SQL, id)
+    res = Database.execute(<<-SQL, [id])
     SELECT
       *
     FROM
@@ -70,7 +71,7 @@ class ModelBase
       id = $1;
     SQL
 
-    x.empty? ? nil : self.new(x.first)
+    res.num_tuples.zero? ? nil : self.new(res.first)
   end
 
   def initialize(params = {})
