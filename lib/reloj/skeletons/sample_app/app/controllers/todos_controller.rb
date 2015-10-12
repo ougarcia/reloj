@@ -1,5 +1,3 @@
-require 'byebug'
-
 class TodosController < Reloj::ControllerBase
 
   def index
