@@ -1,5 +1,5 @@
 # Reloj
-A lightweight web framework for Ruby for creating database-backed web applications with the Model-View-Controller pattern. It features an ActiveRecord pattern ORM, convenient methods for cookie storage for things like session tokens, convenient executables to make development faster (like `reloj new name_of_app`), and is designed to be easy to deply. Check out a [live app built with reloj and deployed on heroku](https://reloj-todo.herokuapp.com/)
+A lightweight web framework for creating database-backed web applications with the Model-View-Controller pattern. It features an active record pattern ORM, convenient methods for cookie storage for things like session tokens, convenient command line interface to speed up development (like `reloj new name_of_app`), and is designed to be easy to deploy. Check out a [live app built with reloj and deployed on heroku](https://reloj-todo.herokuapp.com/)
 
 ## Getting Started
 
